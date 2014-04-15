@@ -22,147 +22,242 @@ using Windows.UI.ViewManagement;
 using mpeg2_player.Common;
 using mpeg2_player.Data;
 
-namespace mpeg2_player {
-    sealed partial class App: Application {
+namespace mpeg2_player
+{
+    sealed partial class App : Application
+    {
         public static readonly IEnumerable<string> VideoExtensions = new ReadOnlyCollection<string>(
             new List<string>() { ".mpg", ".mpeg", ".m2v", ".ts" });
         new public static App Current;
         private CoreCursor cursor = null;
 
-        public App() {
+        public App()
+        {
             Current = this;
             this.InitializeComponent();
-            this.Suspending += OnSuspending; }
+            this.Suspending += OnSuspending;
+        }
 
-        private async Task<Frame> createRootFrame(IActivatedEventArgs args) { 
+        private async Task<Frame> createRootFrame(IActivatedEventArgs args)
+        {
             Frame rootFrame = new Frame();
             SuspensionManager.RegisterFrame(rootFrame, "AppFrame");
-            if(args.PreviousExecutionState == ApplicationExecutionState.Terminated) {
-                try {
-                    await SuspensionManager.RestoreAsync(); }
-                catch(SuspensionManagerException) {} }
+            if (args.PreviousExecutionState == ApplicationExecutionState.Terminated)
+            {
+                try
+                {
+                    await SuspensionManager.RestoreAsync();
+                }
+                catch (SuspensionManagerException) { }
+            }
             Window.Current.Content = rootFrame;
-            return rootFrame; }
+            return rootFrame;
+        }
 
-        protected async override void OnFileActivated(FileActivatedEventArgs args) {
-            if(args.Files != null && args.Files.Count > 0) {
+        protected async override void OnFileActivated(FileActivatedEventArgs args)
+        {
+            if (args.Files != null && args.Files.Count > 0)
+            {
                 StorageFile file = (StorageFile)args.Files[0];
                 object arg = null;
-                if(file.FileType.ToLower() == ".m3u") {
+                if (file.FileType.ToLower() == ".m3u")
+                {
                     IList<string> data = await FileIO.ReadLinesAsync(file);
-                    arg = data.ToList().Find(item => item.StartsWith("http://")); }
-                else {
+                    arg = data.ToList().Find(item => item.StartsWith("http://"));
+                }
+                else
+                {
                     int id = AddFile(file, 0);
-                    if(id >= 0) {
-                        arg = id; } }
+                    if (id >= 0)
+                    {
+                        arg = id;
+                    }
+                }
                 Frame rootFrame = Window.Current.Content as Frame;
-                if(rootFrame == null) {
-                    rootFrame = await createRootFrame(args); }
-                if(arg != null && !rootFrame.Navigate(typeof(PlayerPage), arg)) {
-                    throw new Exception("Failed to create initial page"); } } }
+                if (rootFrame == null)
+                {
+                    rootFrame = await createRootFrame(args);
+                }
+                if (arg != null && !rootFrame.Navigate(typeof(PlayerPage), arg))
+                {
+                    throw new Exception("Failed to create initial page");
+                }
+            }
+        }
 
-        static App() {
-            SuspensionManager.KnownTypes.Add(typeof(Microsoft.PlayerFramework.MediaPlayerState)); }
+        static App()
+        {
+            SuspensionManager.KnownTypes.Add(typeof(Microsoft.PlayerFramework.MediaPlayerState));
+        }
 
-        protected override async void OnLaunched(LaunchActivatedEventArgs args) {
+        protected override async void OnLaunched(LaunchActivatedEventArgs args)
+        {
             Frame rootFrame = Window.Current.Content as Frame;
-            if(rootFrame == null) {
-                rootFrame = await createRootFrame(args); }
-            if(rootFrame.Content == null) {
-                if(!rootFrame.Navigate(typeof(MainPage))) {
-                    throw new Exception("Failed to create initial page"); } }
+            if (rootFrame == null)
+            {
+                rootFrame = await createRootFrame(args);
+            }
+            if (rootFrame.Content == null)
+            {
+                if (!rootFrame.Navigate(typeof(MainPage)))
+                {
+                    throw new Exception("Failed to create initial page");
+                }
+            }
             Window.Current.Activate();
             cursor = Window.Current.CoreWindow.PointerCursor;
             PopulateRecentlyUsed();
             PopulateLibrary();
-            SettingsPane.GetForCurrentView().CommandsRequested += CommandsRequested; }
+            SettingsPane.GetForCurrentView().CommandsRequested += CommandsRequested;
+        }
 
-        private async void OnSuspending(object sender, SuspendingEventArgs e) {
+        private async void OnSuspending(object sender, SuspendingEventArgs e)
+        {
             SuspendingDeferral deferral = e.SuspendingOperation.GetDeferral();
             await SuspensionManager.SaveAsync();
-            deferral.Complete(); }
+            deferral.Complete();
+        }
 
-        private void CommandsRequested(SettingsPane sender, SettingsPaneCommandsRequestedEventArgs args) {
+        private void CommandsRequested(SettingsPane sender, SettingsPaneCommandsRequestedEventArgs args)
+        {
             SettingsCommand about = new SettingsCommand("About", "About", About_Click);
             SettingsCommand privacy = new SettingsCommand("Privacy", "Privacy Policy", PrivacyPolicy_Click);
             SettingsCommand history = new SettingsCommand("History", "Clear History", ClearHistory_Click);
             args.Request.ApplicationCommands.Add(about);
             args.Request.ApplicationCommands.Add(privacy);
-            args.Request.ApplicationCommands.Add(history); }
+            args.Request.ApplicationCommands.Add(history);
+        }
 
-        private void About_Click(IUICommand cmd) {
+        private void About_Click(IUICommand cmd)
+        {
             Windows.UI.Xaml.Controls.SettingsFlyout settings = new Windows.UI.Xaml.Controls.SettingsFlyout();
             settings.Background = new SolidColorBrush(Colors.White);
             settings.HeaderBackground = new SolidColorBrush(Colors.Black);
             settings.Content = new AboutPanel();
             settings.Title = "About";
             settings.Show();
-            RestoreCursor(); }
+            RestoreCursor();
+        }
 
-        private async void PrivacyPolicy_Click(IUICommand cmd) {
-            await Launcher.LaunchUriAsync(new Uri("http://vidya.dyndns.org/mpeg2player.html")); }
+        private async void PrivacyPolicy_Click(IUICommand cmd)
+        {
+            await Launcher.LaunchUriAsync(new Uri("http://vidya.dyndns.org/mpeg2player.html"));
+        }
 
-        private void ClearHistory_Click(IUICommand cmd) {
-            App.Current.ClearRecentlyUsed(); }
+        private void ClearHistory_Click(IUICommand cmd)
+        {
+            App.Current.ClearRecentlyUsed();
+        }
 
-        private async void PopulateRecentlyUsed() {
+        private async void PopulateRecentlyUsed()
+        {
             StorageItemMostRecentlyUsedList mru = StorageApplicationPermissions.MostRecentlyUsedList;
-            foreach(AccessListEntry item in mru.Entries) {
-                StorageFile file = await mru.GetFileAsync(item.Token);
-                AddFile(file, 0); } }
+            
+            
+            foreach (AccessListEntry item in mru.Entries)
+            {
+                // deploying on top of existing app - without uninstalling sometimes refered to 'Recently Used Files' that no longer exist!
+                // added try catch to take account of this!
+                try
+                {
+                    StorageFile file = await mru.GetFileAsync(item.Token);
+                    AddFile(file, 0);
+                }
+                catch (Exception Ex)
+                {
+                    
+                    //throw;
+                }
 
-        private async void PopulateLibrary() {
+            }
+        }
+
+        private async void PopulateLibrary()
+        {
             StorageFolder videos = KnownFolders.VideosLibrary;
             IReadOnlyList<StorageFile> files = await videos.GetFilesAsync();
-            foreach(StorageFile file in files) {
-                AddFile(file, 1); }
+            foreach (StorageFile file in files)
+            {
+                AddFile(file, 1);
+            }
             IReadOnlyList<StorageFolder> dirs = await videos.GetFoldersAsync();
-            foreach(StorageFolder dir in dirs) {
+            foreach (StorageFolder dir in dirs)
+            {
                 int id = VideoDataSource.AddGroup(dir.DisplayName);
                 files = await dir.GetFilesAsync();
-                foreach(StorageFile file in files) {
-                    AddFile(file, id); } } }
+                foreach (StorageFile file in files)
+                {
+                    AddFile(file, id);
+                }
+            }
+        }
 
-        public int AddFile(StorageFile file, int groupID) {
-            if(file != null && VideoExtensions.Contains(file.FileType)) {
+        public int AddFile(StorageFile file, int groupID)
+        {
+            if (file != null && VideoExtensions.Contains(file.FileType))
+            {
                 IEnumerable<VideoDataItem> matches = VideoDataSource.GetGroup(groupID).Items.Where(itm => itm.Path.Equals(file.Path));
-                if(matches.Count() > 0)
+                if (matches.Count() > 0)
                     return matches.First().ID;
                 VideoDataItem item = new VideoDataItem(VideoDataSource.NextID(), String.Empty, String.Empty, file);
                 VideoDataSource.GetGroup(groupID).Items.Add(item);
                 item.SetImage("ms-appx:///Assets/Thumbnail.png");
                 AddThumbnail(file, item);
-                return item.ID; }
-            return -1; }
+                return item.ID;
+            }
+            return -1;
+        }
 
-        public async void AddThumbnail(StorageFile file, VideoDataItem item) {
+        public async void AddThumbnail(StorageFile file, VideoDataItem item)
+        {
             StorageItemThumbnail thumb = await file.GetThumbnailAsync(ThumbnailMode.VideosView);
-            if(thumb != null) {
+            if (thumb != null)
+            {
                 BitmapImage img = new BitmapImage();
                 await img.SetSourceAsync(thumb);
-                item.Image = img; } }
+                item.Image = img;
+            }
+        }
 
-        public async Task<int> PickFile() {
-            if(ApplicationView.Value != ApplicationViewState.Snapped || ApplicationView.TryUnsnap()) {
+        public async Task<int> PickFile()
+        {
+            if (ApplicationView.Value != ApplicationViewState.Snapped || ApplicationView.TryUnsnap())
+            {
                 FileOpenPicker picker = new FileOpenPicker();
                 picker.SuggestedStartLocation = PickerLocationId.VideosLibrary;
-                foreach(string ext in VideoExtensions) {
-                    picker.FileTypeFilter.Add(ext); }
+                foreach (string ext in VideoExtensions)
+                {
+                    picker.FileTypeFilter.Add(ext);
+                }
                 StorageFile file = await picker.PickSingleFileAsync();
-                return AddFile(file, 0); }
-            return -1; }
+                return AddFile(file, 0);
+            }
+            return -1;
+        }
 
-        public void HideCursor() {
-            Window.Current.CoreWindow.PointerCursor = null; }
+        public void HideCursor()
+        {
+            Window.Current.CoreWindow.PointerCursor = null;
+        }
 
-        public void RestoreCursor() {
-            Window.Current.CoreWindow.PointerCursor = cursor; }
+        public void RestoreCursor()
+        {
+            Window.Current.CoreWindow.PointerCursor = cursor;
+        }
 
-        public void AddRecentlyUsed(StorageFile file) {
-            if(file != null) {
+        public void AddRecentlyUsed(StorageFile file)
+        {
+            if (file != null)
+            {
                 StorageApplicationPermissions.MostRecentlyUsedList.Add(file);
-                AddFile(file, 0); } }
+                AddFile(file, 0);
+            }
+        }
 
-        public void ClearRecentlyUsed() {
+        public void ClearRecentlyUsed()
+        {
             StorageApplicationPermissions.MostRecentlyUsedList.Clear();
-            VideoDataSource.GetGroup(0).Items.Clear(); } } }
+            VideoDataSource.GetGroup(0).Items.Clear();
+        }
+    }
+}
