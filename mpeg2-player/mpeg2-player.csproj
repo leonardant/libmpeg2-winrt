@@ -173,7 +173,7 @@
   <ItemGroup>
     <Reference Include="libmpeg2, Version=255.255.255.255, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\libmpeg2\Debug\libmpeg2\Output\libmpeg2.winmd</HintPath>
+      <HintPath>..\libmpeg2\Debug\libmpeg2\libmpeg2.winmd</HintPath>
     </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
