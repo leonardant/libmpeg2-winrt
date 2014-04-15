@@ -171,10 +171,10 @@
     </SDKReference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="libmpeg2, Version=255.255.255.255, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\libmpeg2\Debug\libmpeg2\libmpeg2.winmd</HintPath>
-    </Reference>
+    <ProjectReference Include="..\libmpeg2\libmpeg2.vcxproj">
+      <Project>{c3227c3a-6c6b-4916-a6ae-544c04fb8f2d}</Project>
+      <Name>libmpeg2</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>
