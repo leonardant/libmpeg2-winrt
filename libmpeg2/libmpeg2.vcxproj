@@ -102,6 +102,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <GenerateManifest>false</GenerateManifest>
+    <CustomBuildAfterTargets>
+    </CustomBuildAfterTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <GenerateManifest>false</GenerateManifest>
@@ -181,8 +183,9 @@
       <AdditionalDependencies>runtimeobject.lib;mf.lib;mfuuid.lib;mfplat.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <CustomBuildStep>
-      <Command>mdmerge -metadata_dir "$(WindowsSDK_MetadataPath)" -o "$(ProjectDir)$(Configuration)\$(ProjectName)" -i "$(MSBuildProjectDirectory)" -v -partial</Command>
+      <Command>mdmerge -partial -i "$(OutDir)." -o "$(OutDir)Output" -metadata_dir "$(WindowsSDK_MetadataPath)" &amp;&amp; copy /y $(OutDir)Output\* $(OutDir)</Command>
       <Outputs>$(ProjectDir)$(Configuration)\$(ProjectName)\$(ProjectName).winmd</Outputs>
+      <TreatOutputAsContent>echo AAA</TreatOutputAsContent>
     </CustomBuildStep>
     <Midl>
       <HeaderFileName>libmpeg2.h</HeaderFileName>
