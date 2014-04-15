@@ -12,6 +12,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mpeg2-player", "mpeg2-playe
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{65AF1931-FE44-413B-BCCF-2BB4272334F3}"
 	ProjectSection(SolutionItems) = preProject
+		compilation notes.txt = compilation notes.txt
 		README.txt = README.txt
 	EndProjectSection
 EndProject
@@ -32,8 +33,8 @@ Global
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{C3227C3A-6C6B-4916-A6AE-544C04FB8F2D}.Debug|Any CPU.ActiveCfg = Debug|Win32
-		{C3227C3A-6C6B-4916-A6AE-544C04FB8F2D}.Debug|ARM.ActiveCfg = Debug|ARM
-		{C3227C3A-6C6B-4916-A6AE-544C04FB8F2D}.Debug|ARM.Build.0 = Debug|ARM
+		{C3227C3A-6C6B-4916-A6AE-544C04FB8F2D}.Debug|ARM.ActiveCfg = Release|ARM
+		{C3227C3A-6C6B-4916-A6AE-544C04FB8F2D}.Debug|ARM.Build.0 = Release|ARM
 		{C3227C3A-6C6B-4916-A6AE-544C04FB8F2D}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
 		{C3227C3A-6C6B-4916-A6AE-544C04FB8F2D}.Debug|Mixed Platforms.Build.0 = Debug|Win32
 		{C3227C3A-6C6B-4916-A6AE-544C04FB8F2D}.Debug|Win32.ActiveCfg = Debug|Win32
@@ -56,9 +57,9 @@ Global
 		{464B085F-25CB-4CB5-9000-672CDF3737AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{464B085F-25CB-4CB5-9000-672CDF3737AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{464B085F-25CB-4CB5-9000-672CDF3737AF}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{464B085F-25CB-4CB5-9000-672CDF3737AF}.Debug|ARM.ActiveCfg = Debug|ARM
-		{464B085F-25CB-4CB5-9000-672CDF3737AF}.Debug|ARM.Build.0 = Debug|ARM
-		{464B085F-25CB-4CB5-9000-672CDF3737AF}.Debug|ARM.Deploy.0 = Debug|ARM
+		{464B085F-25CB-4CB5-9000-672CDF3737AF}.Debug|ARM.ActiveCfg = Release|ARM
+		{464B085F-25CB-4CB5-9000-672CDF3737AF}.Debug|ARM.Build.0 = Release|ARM
+		{464B085F-25CB-4CB5-9000-672CDF3737AF}.Debug|ARM.Deploy.0 = Release|ARM
 		{464B085F-25CB-4CB5-9000-672CDF3737AF}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{464B085F-25CB-4CB5-9000-672CDF3737AF}.Debug|Mixed Platforms.Build.0 = Debug|x86
 		{464B085F-25CB-4CB5-9000-672CDF3737AF}.Debug|Mixed Platforms.Deploy.0 = Debug|x86

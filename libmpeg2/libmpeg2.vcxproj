@@ -205,12 +205,15 @@
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
       <ModuleDefinitionFile>libmpeg2.def</ModuleDefinitionFile>
-      <ImageHasSafeExceptionHandlers>true</ImageHasSafeExceptionHandlers>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <AdditionalDependencies>runtimeobject.lib;mf.lib;mfuuid.lib;mfplat.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <CustomBuildStep>
-      <Command>mdmerge -metadata_dir "$(WindowsSDK_MetadataPath)" -o "$(ProjectDir)$(Configuration)\$(ProjectName)" -i "$(MSBuildProjectDirectory)" -v -partial</Command>
+      <Command>mdmerge -partial -i "$(OutDir)." -o "$(OutDir)Output" -metadata_dir "$(WindowsSDK_MetadataPath)" &amp;&amp; copy /y $(OutDir)Output\* $(OutDir)</Command>
       <Outputs>$(ProjectDir)$(Configuration)\$(ProjectName)\$(ProjectName).winmd</Outputs>
+      <TreatOutputAsContent>
+      </TreatOutputAsContent>
+      <Inputs>echo AAA</Inputs>
     </CustomBuildStep>
     <Midl>
       <HeaderFileName>libmpeg2.h</HeaderFileName>
