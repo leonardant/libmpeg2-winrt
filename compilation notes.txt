@@ -1,0 +1,17 @@
+when building the libmpeg2 project, and adding it to the mpeg2player project you may get error messages like...
+
+.../mpeg2-player.csproj : XamlCompiler error WMC1006: Cannot resolve Assembly or Windows Metadata file 'Windows.Media.winmd'
+
+to fix...
+right click libmpeg2 project > configration properties > custom build steps
+edit the line...
+Command line to be...
+mdmerge -partial -i "$(OutDir)." -o "$(OutDir)Output" -metadata_dir "$(WindowsSDK_MetadataPath)" && copy /y $(OutDir)Output\* $(OutDir)
+
+if you get an error after adding the above - check that the & above have not become &amp;
+
+There also appear to be a bug in "custom build steps" which means thay do not get executed unless there is something in the field[s]
+'Additional Dependencies' & 'Treat Output as Content' so add to both...
+echo AAAA
+
+ALSO when building this project for RELEASE, change the linker field 'image has safe exception handle' to no, other wise the winmd file is not generated!
