@@ -16,6 +16,7 @@
     <TargetPlatformVersion>8.1</TargetPlatformVersion>
     <MinimumVisualStudioVersion>12</MinimumVisualStudioVersion>
     <TargetFrameworkVersion />
+    <PackageCertificateThumbprint>191AA17FEEC05F4A21232D20EC0E70D3A48DA7A6</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -103,12 +104,6 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <SDKReference Include="Microsoft.PlayerFramework.Xaml, Version=1.8.2.2">
-      <Name>Microsoft Player Framework %28Microsoft.PlayerFramework.Xaml, Version=1.8.2.2%29</Name>
-    </SDKReference>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="AboutPanel.xaml.cs">
       <DependentUpon>AboutPanel.xaml</DependentUpon>
     </Compile>
@@ -171,10 +166,15 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\libmpeg2\libmpeg2.vcxproj">
-      <Project>{c3227c3a-6c6b-4916-a6ae-544c04fb8f2d}</Project>
-      <Name>libmpeg2</Name>
-    </ProjectReference>
+    <SDKReference Include="Microsoft.PlayerFramework.Xaml, Version=1.8.2.2">
+      <Name>Microsoft Player Framework</Name>
+    </SDKReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="libmpeg2, Version=255.255.255.255, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\libmpeg2\Debug\libmpeg2\Output\libmpeg2.winmd</HintPath>
+    </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>

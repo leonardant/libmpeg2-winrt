@@ -1,11 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30110.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libmpeg2", "libmpeg2\libmpeg2.vcxproj", "{C3227C3A-6C6B-4916-A6AE-544C04FB8F2D}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test-app", "test-app\test-app.vcxproj", "{C8C451B1-D2A1-4E0F-9FAA-F84C42E686C9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mpeg2-player", "mpeg2-player\mpeg2-player.csproj", "{464B085F-25CB-4CB5-9000-672CDF3737AF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C3227C3A-6C6B-4916-A6AE-544C04FB8F2D} = {C3227C3A-6C6B-4916-A6AE-544C04FB8F2D}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{65AF1931-FE44-413B-BCCF-2BB4272334F3}"
 	ProjectSection(SolutionItems) = preProject

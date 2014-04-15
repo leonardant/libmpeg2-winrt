@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
-  <Identity Name="LucasJacobs.MPEG2Player" Publisher="CN=Lucas" Version="1.1.0.0" />
+  <Identity Name="LucasJacobs.MPEG2Player" Publisher="CN=Admin" Version="1.1.0.0" />
   <Properties>
     <DisplayName>MPEG-2 TS Player</DisplayName>
     <PublisherDisplayName>Lucas Jacobs</PublisherDisplayName>
@@ -59,6 +59,7 @@
     <Capability Name="internetClient" />
     <Capability Name="privateNetworkClientServer" />
   </Capabilities>
+  <!--
   <Extensions>
     <Extension Category="windows.activatableClass.inProcessServer">
       <InProcessServer>
@@ -67,4 +68,5 @@
       </InProcessServer>
     </Extension>
   </Extensions>
+  -->
 </Package>
